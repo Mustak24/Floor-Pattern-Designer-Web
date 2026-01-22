@@ -1,175 +1,61 @@
 # Floor Pattern Designer
 
-A professional web-based floor pattern design tool built with React and Canvas API. Create beautiful floor tile patterns by uploading your own tile images and experimenting with different layouts, sizes, and rotations.
+A professional tool for designing floor patterns using tile images. Built with React and the HTML5 Canvas API.
 
-![Floor Pattern Designer](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react)
-![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?logo=vite)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.19-38B2AC?logo=tailwindcss)
+## Features
 
-## ✨ Features
+- **Upload & Preview**: Upload your own tile or marble images to visualize patterns instantly.
+- **Advanced Pattern Patterns**:
+     - Standard Grid and Offset layouts
+     - Complex Mirror patterns (Diamond, Hexagon, etc.)
+     - Customizable tile sizes and spacing
+- **Interactive Workspace**:
+     - Smooth Zoom and Pan controls
+     - Real-time rendering
+- **Export Options**: Save your designs as high-resolution PNG files.
+- **Privacy Focused**: Pure client-side processing - your images never leave your browser.
 
-- **🖼️ Image Upload**: Upload your own tile images (marble, ceramic, wood, etc.)
-- **🎨 Pattern Types**: Choose from Grid and Diagonal patterns
-- **📏 Customizable Sizing**: Adjust tile size from 20px to 300px
-- **📐 Grout Spacing**: Control spacing between tiles (0-20px)
-- **🔄 Tile Rotation**: Rotate individual tiles by 90° with a click
-- **🔍 Zoom & Pan**: Zoom in/out to view pattern details
-- **📊 Grid Presets**: Quick 2×2, 3×3, and 4×4 grid layouts
-- **🎯 Manual Grid Control**: Set custom column and row counts
-- **💾 Export**: Download your design as high-resolution PNG (2x scale)
-- **⚡ Real-time Preview**: Instant pattern updates as you adjust settings
+## Technologies Used
 
-## 🚀 Getting Started
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Graphics**: HTML5 Canvas API
 
-### Prerequisites
+## Getting Started
 
-- Node.js 16.x or higher
-- npm or yarn package manager
+Follow these steps to run the project locally:
 
-### Installation
+1. **Clone the repository**
 
-1. Clone the repository:
+      ```bash
+      git clone <repository-url>
+      cd my-app
+      ```
 
-```bash
-git clone <repository-url>
-cd my-app
-```
+2. **Install dependencies**
 
-2. Install dependencies:
+      ```bash
+      npm install
+      ```
 
-```bash
-npm install
-```
+3. **Start the development server**
 
-3. Start the development server:
+      ```bash
+      npm run dev
+      ```
 
-```bash
-npm run dev
-```
+4. **Open in Browser**
+   Navigate to `http://localhost:5173` to view the application.
 
-4. Open your browser and navigate to `http://localhost:5173`
+## Project Structure
 
-## 🛠️ Available Scripts
+- `src/app`: Main application layout and state management
+- `src/canvas`: Core canvas rendering logic and drawing functions
+- `src/patterns`: Algorithms for generating different floor patterns
+- `src/ui`: Reusable UI components (Toolbar, UploadPanel, etc.)
+- `src/hooks`: Custom React hooks implementation
 
-- **`npm run dev`** - Start development server with hot module replacement
-- **`npm run build`** - Build for production
-- **`npm run preview`** - Preview production build locally
-- **`npm run lint`** - Run ESLint for code quality checks
+## License
 
-## 📁 Project Structure
-
-```
-my-app/
-├── src/
-│   ├── app/              # Main application components
-│   │   └── FloorDesigner.jsx
-│   ├── canvas/           # Canvas rendering logic
-│   │   ├── CanvasController.js
-│   │   └── CanvasRenderer.jsx
-│   ├── engine/           # Pattern generation engine
-│   │   ├── patternEngine.js
-│   │   └── layoutCalculator.js
-│   ├── patterns/         # Pattern generators
-│   │   ├── grid.js
-│   │   └── diagonal.js
-│   ├── hooks/            # React hooks
-│   │   └── useFloorDesigner.js
-│   ├── ui/               # UI components
-│   │   ├── PatternControls.jsx
-│   │   ├── Toolbar.jsx
-│   │   └── UploadPanel.jsx
-│   └── utils/            # Utility functions
-│       ├── exportCanvas.js
-│       ├── imageLoader.js
-│       └── mathHelpers.js
-├── public/               # Static assets
-├── index.html
-├── package.json
-└── vite.config.js
-```
-
-## 🎯 How to Use
-
-1. **Upload a Tile Image**
-      - Click "Choose Image" or drag & drop your tile image
-      - Supported formats: JPG, PNG, WebP
-
-2. **Select a Pattern Type**
-      - **Grid**: Traditional straight-laid pattern
-      - **Diagonal**: 45° rotated grid pattern
-
-3. **Adjust Settings**
-      - **Tile Size**: Control the size of each tile
-      - **Grout Spacing**: Set the gap between tiles
-      - **Tile Rotation**: Modify the rotation angle (0-360°)
-
-4. **Fine-tune the Layout**
-      - Use preset grid sizes (2×2, 3×3, 4×4)
-      - Or manually set columns and rows
-      - Click individual tiles to rotate them 90°
-
-5. **Export Your Design**
-      - Zoom to desired view
-      - Click "Export PNG" to download high-resolution image
-
-## 🧩 Pattern Types
-
-### Grid Pattern
-
-Classic straight-laid pattern where tiles are aligned in rows and columns. Perfect for traditional flooring designs.
-
-### Diagonal Pattern
-
-Tiles are rotated 45° creating a diamond-like appearance. Adds visual interest and can make spaces appear larger.
-
-## 🎨 Tech Stack
-
-- **React 19.2** - UI framework
-- **Vite 7.2** - Build tool and dev server
-- **TailwindCSS 3.4** - Utility-first CSS framework
-- **Canvas API** - For rendering tile patterns
-- **ESLint** - Code quality and consistency
-
-## 🔧 Configuration
-
-### Tailwind Configuration
-
-Custom colors and styles are defined in `tailwind.config.js`. The app uses a custom accent color scheme and soft shadow utilities.
-
-### Vite Configuration
-
-Hot Module Replacement (HMR) is configured in `vite.config.js` for fast development feedback.
-
-## 📝 Development Notes
-
-- The application is purely client-side with no backend requirements
-- All image processing happens in the browser
-- Patterns are generated using the HTML5 Canvas API
-- State management is handled via React hooks
-- The app is responsive and works on desktop browsers
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is private and not licensed for public use.
-
-## 🐛 Known Limitations
-
-- Large images may affect performance
-- Export quality depends on browser canvas limitations
-- Mobile support is limited (desktop recommended)
-
-## 💡 Future Enhancements
-
-- Additional pattern types (chevron, basketweave, etc.)
-- Color adjustment tools
-- Multiple tile support for complex patterns
-- Pattern templates library
-- Mobile-responsive design improvements
-
----
-
-**Built with ❤️ using React, Canvas API, and modern web technologies**
+[MIT](LICENSE)

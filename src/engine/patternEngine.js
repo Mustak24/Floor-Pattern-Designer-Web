@@ -4,6 +4,7 @@
 
 import { generateGridPattern } from "../patterns/grid.js";
 import { generateDiagonalPattern } from "../patterns/diagonal.js";
+import { generateMirrorPattern } from "../patterns/mirror.js";
 
 /**
  * Pattern type constants
@@ -11,6 +12,7 @@ import { generateDiagonalPattern } from "../patterns/diagonal.js";
 export const PATTERN_TYPES = {
         GRID: "grid",
         DIAGONAL: "diagonal",
+        MIRROR: "mirror",
 };
 
 /**
@@ -20,6 +22,7 @@ export const PATTERN_TYPES = {
  * @param {number} config.tileSize - Tile size in pixels
  * @param {number} config.spacing - Spacing between tiles
  * @param {number} config.rotation - Rotation in degrees
+ * @param {number} config.patternId - Mirror pattern ID (for MIRROR type)
  * @param {Object} canvasSize - Canvas dimensions {width, height}
  * @returns {Array} - Array of tile placement objects
  */
@@ -41,11 +44,14 @@ export function generatePattern(patternType, config, canvasSize) {
                 case PATTERN_TYPES.DIAGONAL:
                         return generateDiagonalPattern(config, canvasSize);
 
+                case PATTERN_TYPES.MIRROR:
+                        return generateMirrorPattern(config, canvasSize);
+
                 default:
                         console.warn(
-                                `Unknown pattern type: ${patternType}, defaulting to grid`,
+                                `Unknown pattern type: ${patternType}, defaulting to mirror`,
                         );
-                        return generateGridPattern(config, canvasSize);
+                        return generateMirrorPattern(config, canvasSize);
         }
 }
 
@@ -56,6 +62,7 @@ export function getPatternDisplayName(patternType) {
         const names = {
                 [PATTERN_TYPES.GRID]: "Grid",
                 [PATTERN_TYPES.DIAGONAL]: "Diagonal",
+                [PATTERN_TYPES.MIRROR]: "Mirror",
         };
 
         return names[patternType] || "Unknown";

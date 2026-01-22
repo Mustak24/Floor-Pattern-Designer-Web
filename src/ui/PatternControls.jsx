@@ -3,56 +3,119 @@
  * User controls for pattern configuration
  */
 
-import { PATTERN_TYPES } from "../engine/patternEngine.js";
+import { getAllPatterns } from "../patterns/mirrorPatterns.js";
 
-const PATTERN_OPTIONS = [
-        { value: PATTERN_TYPES.GRID, label: "Grid", icon: "▦" },
-        { value: PATTERN_TYPES.DIAGONAL, label: "Diagonal", icon: "⟍" },
-];
+const PATTERN_OPTIONS = getAllPatterns();
 
-export default function PatternControls({
-        config,
-        onChange,
-        onReset,
-        onPresetGrid,
-}) {
+/**
+ * Generate SVG preview for a mirror pattern
+ */
+function PatternPreview({ pattern }) {
+        const size = 40;
+        const tileSize = size / 2;
+
+        return (
+                <svg
+                        width={size}
+                        height={size}
+                        viewBox={`0 0 ${size} ${size}`}
+                        className="mx-auto"
+                >
+                        {pattern.tiles.map((tile, index) => {
+                                const col = index % 2;
+                                const row = Math.floor(index / 2);
+                                const x = col * tileSize;
+                                const y = row * tileSize;
+
+                                // Create a transform string for flip and rotate
+                                const transforms = [];
+                                const centerX = x + tileSize / 2;
+                                const centerY = y + tileSize / 2;
+
+                                // Apply transformations in order: translate to center, scale (flip), rotate, translate back
+                                let transform = `translate(${centerX}, ${centerY})`;
+
+                                if (tile.flipX || tile.flipY) {
+                                        const scaleX = tile.flipX ? -1 : 1;
+                                        const scaleY = tile.flipY ? -1 : 1;
+                                        transform += ` scale(${scaleX}, ${scaleY})`;
+                                }
+
+                                if (tile.rotate) {
+                                        transform += ` rotate(${tile.rotate})`;
+                                }
+
+                                transform += ` translate(${-tileSize / 2}, ${-tileSize / 2})`;
+
+                                return (
+                                        <g key={index} transform={transform}>
+                                                {/* Base tile shape - a gradient triangle */}
+                                                <rect
+                                                        width={tileSize}
+                                                        height={tileSize}
+                                                        fill="#e0e7ff"
+                                                        stroke="#6366f1"
+                                                        strokeWidth="0.5"
+                                                />
+                                                <path
+                                                        d={`M 0,0 L ${tileSize},0 L 0,${tileSize} Z`}
+                                                        fill="#818cf8"
+                                                />
+                                        </g>
+                                );
+                        })}
+                </svg>
+        );
+}
+
+export default function PatternControls({ config, onChange, onReset }) {
         const handleChange = (key, value) => {
                 onChange({ [key]: value });
         };
 
         return (
                 <div className="space-y-6">
-                        {/* Pattern Type Selector */}
+                        {/* Pattern Selector */}
                         <div className="space-y-3">
                                 <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        Pattern Type
+                                        Mirror Pattern
                                 </label>
                                 <div className="grid grid-cols-2 gap-2">
-                                        {PATTERN_OPTIONS.map((option) => (
-                                                <button
-                                                        key={option.value}
-                                                        onClick={() =>
-                                                                handleChange(
-                                                                        "patternType",
-                                                                        option.value,
-                                                                )
-                                                        }
-                                                        className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 font-medium text-sm transition-all duration-200 ${
-                                                                config.patternType ===
-                                                                option.value
-                                                                        ? "border-accent-500 bg-accent-50 text-accent-700 shadow-sm"
-                                                                        : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
-                                                        }`}
-                                                >
-                                                        <span className="text-lg">
-                                                                {option.icon}
-                                                        </span>
-                                                        <span>
-                                                                {option.label}
-                                                        </span>
-                                                </button>
-                                        ))}
+                                        {[...PATTERN_OPTIONS]
+                                                .reverse()
+                                                .map((pattern) => (
+                                                        <button
+                                                                key={
+                                                                        pattern.name
+                                                                }
+                                                                onClick={() =>
+                                                                        handleChange(
+                                                                                "patternId",
+                                                                                pattern.name,
+                                                                        )
+                                                                }
+                                                                className={`flex items-center justify-center px-3 py-4 rounded-lg border-2 transition-all duration-200 ${
+                                                                        config.patternId ===
+                                                                        pattern.name
+                                                                                ? "border-accent-500 bg-accent-50 shadow-sm"
+                                                                                : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                                                                }`}
+                                                                title={
+                                                                        pattern.displayName
+                                                                }
+                                                        >
+                                                                <PatternPreview
+                                                                        pattern={
+                                                                                pattern
+                                                                        }
+                                                                />
+                                                        </button>
+                                                ))}
                                 </div>
+                                <p className="text-xs text-gray-500">
+                                        Each pattern creates unique symmetrical
+                                        effects
+                                </p>
                         </div>
 
                         {/* Tile Size Slider */}
@@ -80,157 +143,6 @@ export default function PatternControls({
                                         <span>20px</span>
                                         <span>300px</span>
                                 </div>
-                        </div>
-
-                        {/* Spacing Slider */}
-                        <div className="space-y-3">
-                                <label className="flex items-center justify-between text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        <span>Grout Spacing</span>
-                                        <span className="text-accent-600 font-mono">
-                                                {config.spacing}px
-                                        </span>
-                                </label>
-                                <input
-                                        type="range"
-                                        min="0"
-                                        max="20"
-                                        value={config.spacing}
-                                        onChange={(e) =>
-                                                handleChange(
-                                                        "spacing",
-                                                        Number(e.target.value),
-                                                )
-                                        }
-                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-500"
-                                />
-                                <div className="flex justify-between text-xs text-gray-500">
-                                        <span>0px</span>
-                                        <span>20px</span>
-                                </div>
-                        </div>
-
-                        {/* Rotation Slider */}
-                        <div className="space-y-3">
-                                <label className="flex items-center justify-between text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        <span>Tile Rotation</span>
-                                        <span className="text-accent-600 font-mono">
-                                                {config.rotation}°
-                                        </span>
-                                </label>
-                                <input
-                                        type="range"
-                                        min="0"
-                                        max="360"
-                                        value={config.rotation}
-                                        onChange={(e) =>
-                                                handleChange(
-                                                        "rotation",
-                                                        Number(e.target.value),
-                                                )
-                                        }
-                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-500"
-                                />
-                                <div className="flex justify-between text-xs text-gray-500">
-                                        <span>0°</span>
-                                        <span>360°</span>
-                                </div>
-                        </div>
-
-                        {/* Grid Preset Buttons */}
-                        <div className="space-y-3">
-                                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        Grid Presets
-                                </label>
-                                <div className="grid grid-cols-3 gap-2">
-                                        <button
-                                                onClick={() => onPresetGrid(2)}
-                                                className="px-3 py-2 bg-white border-2 border-gray-200 hover:border-accent-400 hover:bg-accent-50 rounded-lg font-semibold text-sm text-gray-700 hover:text-accent-700 transition-all duration-200"
-                                        >
-                                                2×2
-                                        </button>
-                                        <button
-                                                onClick={() => onPresetGrid(3)}
-                                                className="px-3 py-2 bg-white border-2 border-gray-200 hover:border-accent-400 hover:bg-accent-50 rounded-lg font-semibold text-sm text-gray-700 hover:text-accent-700 transition-all duration-200"
-                                        >
-                                                3×3
-                                        </button>
-                                        <button
-                                                onClick={() => onPresetGrid(4)}
-                                                className="px-3 py-2 bg-white border-2 border-gray-200 hover:border-accent-400 hover:bg-accent-50 rounded-lg font-semibold text-sm text-gray-700 hover:text-accent-700 transition-all duration-200"
-                                        >
-                                                4×4
-                                        </button>
-                                </div>
-                        </div>
-
-                        {/* Manual Column/Row Controls */}
-                        <div className="space-y-3">
-                                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        Manual Grid Size
-                                </label>
-                                <div className="grid grid-cols-2 gap-3">
-                                        <div>
-                                                <label className="block text-xs text-gray-600 mb-1">
-                                                        Columns
-                                                </label>
-                                                <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="50"
-                                                        value={
-                                                                config.columns ||
-                                                                ""
-                                                        }
-                                                        placeholder="Auto"
-                                                        onChange={(e) =>
-                                                                handleChange(
-                                                                        "columns",
-                                                                        e.target
-                                                                                .value
-                                                                                ? Number(
-                                                                                          e
-                                                                                                  .target
-                                                                                                  .value,
-                                                                                  )
-                                                                                : null,
-                                                                )
-                                                        }
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 text-sm"
-                                                />
-                                        </div>
-                                        <div>
-                                                <label className="block text-xs text-gray-600 mb-1">
-                                                        Rows
-                                                </label>
-                                                <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="50"
-                                                        value={
-                                                                config.rows ||
-                                                                ""
-                                                        }
-                                                        placeholder="Auto"
-                                                        onChange={(e) =>
-                                                                handleChange(
-                                                                        "rows",
-                                                                        e.target
-                                                                                .value
-                                                                                ? Number(
-                                                                                          e
-                                                                                                  .target
-                                                                                                  .value,
-                                                                                  )
-                                                                                : null,
-                                                                )
-                                                        }
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 text-sm"
-                                                />
-                                        </div>
-                                </div>
-                                <p className="text-xs text-gray-500">
-                                        Leave blank for automatic calculation
-                                </p>
                         </div>
 
                         {/* Reset Button */}
