@@ -4,96 +4,94 @@
  */
 
 export const MIRROR_PATTERNS = {
-    "2D-14": {
-        name: "2D-14",
-        displayName: "Mirror Quad",
-        layout: { cols: 2, rows: 2 },
+    "01": {
+        name: '01',
+        displayName: "Flip on Right",
+        layout: { cols: 2, rows: 1 },
         tiles: [
             { flipX: false, flipY: false, rotate: 0 },
             { flipX: true, flipY: false, rotate: 0 },
-            { flipX: false, flipY: true, rotate: 180 },
-            { flipX: true, flipY: true, rotate: 180 },
-        ],
+        ]
     },
-
-    "2D-01": {
-        name: "2D-01",
-        displayName: "Rotate 180",
-        layout: { cols: 2, rows: 2 },
+    
+    "02": {
+        name: '02',
+        displayName: "Flip on Left",
+        layout: { cols: 2, rows: 1 },
         tiles: [
-            { flipX: false, flipY: false, rotate: 0 },
-            { flipX: false, flipY: false, rotate: 180 },
-            { flipX: false, flipY: false, rotate: 180 },
-            { flipX: false, flipY: false, rotate: 0 },
-        ],
-    },
-
-    "2D-02": {
-        name: "2D-02",
-        displayName: "Vertical Mirror",
-        layout: { cols: 2, rows: 1 }, // 1 row, 2 cols - horizontal strip
-        tiles: [
-            { flipX: false, flipY: false, rotate: 0 },
             { flipX: true, flipY: false, rotate: 0 },
-        ],
+            { flipX: false, flipY: false, rotate: 0 },
+        ]
     },
-
-    "2D-03": {
-        name: "2D-03",
-        displayName: "Horizontal Mirror",
-        layout: { cols: 1, rows: 2 }, // 2 rows, 1 col - vertical strip
+    
+    "03": {
+        name: '03',
+        displayName: "Flip on Bottom",
+        layout: { cols: 1, rows: 2 },
         tiles: [
             { flipX: false, flipY: false, rotate: 0 },
             { flipX: false, flipY: true, rotate: 0 },
-        ],
+        ]
     },
 
-    "2D-04": {
-        name: "2D-04",
-        displayName: "Diagonal Mirror",
+    "04": {
+        name: '04',
+        displayName: "Flip on Top",
+        layout: { cols: 1, rows: 2 },
+        tiles: [
+            { flipX: false, flipY: true, rotate: 0 },
+            { flipX: false, flipY: false, rotate: 0 },
+        ]
+    },
+
+
+
+    '11': {
+        name: '11',
+        displayName: "Mirror Quad (Top-Left Origin)",
         layout: { cols: 2, rows: 2 },
         tiles: [
             { flipX: false, flipY: false, rotate: 0 },
-            { flipX: false, flipY: true, rotate: 90 },
-            { flipX: true, flipY: false, rotate: 270 },
-            { flipX: false, flipY: false, rotate: 180 },
-        ],
+            { flipX: true, flipY: false, rotate: 0 },
+            { flipX: false, flipY: true, rotate: 0 },
+            { flipX: true, flipY: true, rotate: 0 },
+        ]
     },
 
-    "2D-05": {
-        name: "2D-05",
-        displayName: "Kaleidoscope",
+    '12': {
+        name: '12',
+        displayName: "Mirror Quad (Top-Right Origin)",
         layout: { cols: 2, rows: 2 },
         tiles: [
+            { flipX: true, flipY: false, rotate: 0 },
             { flipX: false, flipY: false, rotate: 0 },
-            { flipX: true, flipY: false, rotate: 90 },
-            { flipX: false, flipY: true, rotate: 270 },
-            { flipX: true, flipY: true, rotate: 180 },
-        ],
-    },
-
-    "2D-06": {
-        name: "2D-06",
-        displayName: "Pinwheel",
-        layout: { cols: 2, rows: 2 },
-        tiles: [
-            { flipX: false, flipY: false, rotate: 0 },
-            { flipX: false, flipY: false, rotate: 90 },
-            { flipX: false, flipY: false, rotate: 270 },
-            { flipX: false, flipY: false, rotate: 180 },
-        ],
-    },
-
-    "2D-07": {
-        name: "2D-07",
-        displayName: "Diamond Flip",
-        layout: { cols: 2, rows: 2 },
-        tiles: [
             { flipX: true, flipY: true, rotate: 0 },
             { flipX: false, flipY: true, rotate: 0 },
+        ]
+    },
+
+    '13': {
+        name: '13',
+        displayName: "Mirror Quad (Bottom-Left Origin)",
+        layout: { cols: 2, rows: 2 },
+        tiles: [
+            { flipX: false, flipY: true, rotate: 0 },
+            { flipX: true, flipY: true, rotate: 0 },
+            { flipX: false, flipY: false, rotate: 0 },
+            { flipX: true, flipY: false, rotate: 0 },
+        ]
+    },
+
+    '14': {
+        name: '14',
+        displayName: "Mirror Quad (Bottom-Right Origin)",
+        layout: { cols: 2, rows: 2 },
+        tiles: [
             { flipX: true, flipY: false, rotate: 0 },
             { flipX: false, flipY: false, rotate: 0 },
-        ],
+            { flipX: true, flipY: true, rotate: 0 },
+            { flipX: false, flipY: true, rotate: 0 },
+        ]
     },
 };
 
@@ -101,7 +99,7 @@ export const MIRROR_PATTERNS = {
  * Get pattern by ID
  */
 export function getPattern(patternId) {
-    return MIRROR_PATTERNS[patternId] || MIRROR_PATTERNS["2D-14"];
+    return MIRROR_PATTERNS[patternId] || MIRROR_PATTERNS["11"];
 }
 
 /**

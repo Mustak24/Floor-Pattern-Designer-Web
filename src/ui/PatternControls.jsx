@@ -127,6 +127,63 @@ export default function PatternControls({ config, onChange, onReset }) {
                 </div>
             </div>
 
+            {/* Pattern Repetition Controls */}
+            <div className="space-y-3">
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    Pattern Repetition
+                </label>
+
+                {/* Repeat in Columns (X) */}
+                <div className="space-y-2">
+                    <label className="flex items-center justify-between text-xs text-gray-600">
+                        <span>Repeat in Columns</span>
+                        <span className="text-accent-600 font-mono font-semibold">
+                            {config.repeatX || 1}x
+                        </span>
+                    </label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="20"
+                        value={config.repeatX || 1}
+                        onChange={(e) =>
+                            handleChange(
+                                "repeatX",
+                                Math.max(1, Number(e.target.value)),
+                            )
+                        }
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                    />
+                </div>
+
+                {/* Repeat in Rows (Y) */}
+                <div className="space-y-2">
+                    <label className="flex items-center justify-between text-xs text-gray-600">
+                        <span>Repeat in Rows</span>
+                        <span className="text-accent-600 font-mono font-semibold">
+                            {config.repeatY || 1}x
+                        </span>
+                    </label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="20"
+                        value={config.repeatY || 1}
+                        onChange={(e) =>
+                            handleChange(
+                                "repeatY",
+                                Math.max(1, Number(e.target.value)),
+                            )
+                        }
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                    />
+                </div>
+
+                <p className="text-xs text-gray-500">
+                    Default: 1x1 shows a single pattern instance
+                </p>
+            </div>
+
             {/* Reset Button */}
             <div className="pt-4 border-t border-gray-200">
                 <button
