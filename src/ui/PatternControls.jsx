@@ -82,7 +82,7 @@ export default function PatternControls({ config, onChange, onReset }) {
                     Mirror Pattern
                 </label>
                 <div className="grid grid-cols-2 gap-2">
-                    {[...PATTERN_OPTIONS].reverse().map((pattern) => (
+                    {[...PATTERN_OPTIONS].map((pattern) => (
                         <button
                             key={pattern.name}
                             onClick={() =>
