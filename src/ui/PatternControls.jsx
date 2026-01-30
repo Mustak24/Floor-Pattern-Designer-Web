@@ -135,48 +135,74 @@ export default function PatternControls({ config, onChange, onReset }) {
 
                 {/* Repeat in Columns (X) */}
                 <div className="space-y-2">
-                    <label className="flex items-center justify-between text-xs text-gray-600">
-                        <span>Repeat in Columns</span>
-                        <span className="text-accent-600 font-mono font-semibold">
-                            {config.repeatX || 1}x
-                        </span>
+                    <label className="block text-xs text-gray-600">
+                        Repeat in Columns
                     </label>
-                    <input
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={config.repeatX || 1}
-                        onChange={(e) =>
-                            handleChange(
-                                "repeatX",
-                                Math.max(1, Number(e.target.value)),
-                            )
-                        }
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    />
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() =>
+                                handleChange(
+                                    "repeatX",
+                                    Math.max(1, (config.repeatX || 1) - 1),
+                                )
+                            }
+                            disabled={(config.repeatX || 1) <= 1}
+                            className="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed text-gray-700 font-bold rounded-lg transition-colors duration-200">
+                            −
+                        </button>
+                        <div className="flex-1 flex items-center justify-center px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg">
+                            <span className="text-accent-600 font-mono font-semibold text-lg">
+                                {config.repeatX || 1}
+                            </span>
+                        </div>
+                        <button
+                            onClick={() =>
+                                handleChange(
+                                    "repeatX",
+                                    Math.min(20, (config.repeatX || 1) + 1),
+                                )
+                            }
+                            disabled={(config.repeatX || 1) >= 20}
+                            className="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed text-gray-700 font-bold rounded-lg transition-colors duration-200">
+                            +
+                        </button>
+                    </div>
                 </div>
 
                 {/* Repeat in Rows (Y) */}
                 <div className="space-y-2">
-                    <label className="flex items-center justify-between text-xs text-gray-600">
-                        <span>Repeat in Rows</span>
-                        <span className="text-accent-600 font-mono font-semibold">
-                            {config.repeatY || 1}x
-                        </span>
+                    <label className="block text-xs text-gray-600">
+                        Repeat in Rows
                     </label>
-                    <input
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={config.repeatY || 1}
-                        onChange={(e) =>
-                            handleChange(
-                                "repeatY",
-                                Math.max(1, Number(e.target.value)),
-                            )
-                        }
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                    />
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() =>
+                                handleChange(
+                                    "repeatY",
+                                    Math.max(1, (config.repeatY || 1) - 1),
+                                )
+                            }
+                            disabled={(config.repeatY || 1) <= 1}
+                            className="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed text-gray-700 font-bold rounded-lg transition-colors duration-200">
+                            −
+                        </button>
+                        <div className="flex-1 flex items-center justify-center px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg">
+                            <span className="text-accent-600 font-mono font-semibold text-lg">
+                                {config.repeatY || 1}
+                            </span>
+                        </div>
+                        <button
+                            onClick={() =>
+                                handleChange(
+                                    "repeatY",
+                                    Math.min(20, (config.repeatY || 1) + 1),
+                                )
+                            }
+                            disabled={(config.repeatY || 1) >= 20}
+                            className="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:cursor-not-allowed text-gray-700 font-bold rounded-lg transition-colors duration-200">
+                            +
+                        </button>
+                    </div>
                 </div>
 
                 <p className="text-xs text-gray-500">
